@@ -4,7 +4,7 @@ using namespace std;
 struct Node
 {
     int data;
-    struct Node *Next;
+    Node *next;
 };
 
 struct Node *head;
@@ -14,12 +14,12 @@ struct Node *head;
 void insertAtTail(struct Node *newNode)
 {
     struct Node *temp = head;
-    while (temp->Next != NULL)
+    while (temp->next != nullptr)
     {
-        temp = temp->Next;
+        temp = temp->next;
     }
 
-    temp->Next = newNode;
+    temp->next = newNode;
 }
 
 /// Printing Out the LinkedList ->
@@ -28,29 +28,35 @@ void printLinkedList()
 {
     struct Node *t = head;
 
-    while (t != NULL)
+    while (t != nullptr)
     {
         cout << t->data << " -> ";
-        t = t->Next;
+        t = t->next;
     }
     cout << endl;
 }
 
+void deAllocation()
+{
+    Node *current = head;
+
+    while (current != nullptr)
+    {
+
+        Node *nextNode = current->next;
+        delete current;
+        current = nextNode;
+    }
+}
+
 int main()
 {
-    /// Declarations Of Pointers ->
-
-    struct Node *one = NULL;
-    struct Node *two = NULL;
-    struct Node *three = NULL;
-    struct Node *four = NULL;
-
     /// Allocating Memories ->
 
-    one = (struct Node *)malloc(sizeof(struct Node));
-    two = (struct Node *)malloc(sizeof(struct Node));
-    three = (struct Node *)malloc(sizeof(struct Node));
-    four = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *one = new Node;
+    struct Node *two = new Node;
+    struct Node *three = new Node;
+    struct Node *four = new Node;
 
     /// Pushing Data's ->
 
@@ -61,10 +67,10 @@ int main()
 
     /// Connecting Node's ->
 
-    one->Next = two;
-    two->Next = three;
-    three->Next = four;
-    four->Next = NULL;
+    one->next = two;
+    two->next = three;
+    three->next = four;
+    four->next = nullptr;
 
     head = one;
 
@@ -75,10 +81,9 @@ int main()
 
     /// Created a New Node for Tail
 
-    struct Node *newNode = NULL;
-    newNode = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *newNode = new Node;
     newNode->data = 14;
-    newNode->Next = NULL;
+    newNode->next = nullptr;
 
     insertAtTail(newNode);
 
@@ -86,4 +91,6 @@ int main()
 
     cout << "After :-" << endl;
     printLinkedList();
+
+    deAllocation();
 }
