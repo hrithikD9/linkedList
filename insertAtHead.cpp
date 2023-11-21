@@ -4,62 +4,69 @@ using namespace std;
 struct Node
 {
     int data;
-    struct Node *Next;
+    Node *next;
 };
 
-struct Node *head;
+struct Node *head = NULL;
 
 /// Insert At Head ->
 void insertAtHead(int data)
 {
 
-    struct Node *newNode = NULL;
-    newNode = (struct Node *)malloc(sizeof(struct Node));
-    newNode->data = data;
-    newNode->Next = head;
-    head = newNode;
+    struct Node *tempNode = new Node;
+    tempNode->data = data;
+    tempNode->next = head;
+    head = tempNode;
 }
 
 void printLinkedList()
 {
-    /// Printing Out the LinkedList ->
+    //? Printing Out the LinkedList ->
 
     struct Node *t = head;
 
-    while (t != 0)
+    while (t != nullptr)
     {
         cout << t->data << " -> ";
-        t = t->Next;
+        t = t->next;
     }
     cout << endl;
+}
+
+//! Deallocate Linked List
+
+void deAllocation()
+{
+    Node *current = head;
+    while (current != nullptr)
+    {
+        Node *nextNode = current->next;
+        delete current;
+        current = nextNode;
+    }
+    head = nullptr;
 }
 
 int main()
 {
 
-    /// Declarations Of Pointers ->
+    //* Allocating Memories -> ->
 
-    struct Node *a = NULL;
-    struct Node *b = NULL;
-    struct Node *c = NULL;
+    struct Node *a = new Node;
+    struct Node *b = new Node;
+    struct Node *c = new Node;
 
-    /// Allocating Memories ->
-
-    a = (struct Node *)malloc(sizeof(struct Node));
-    b = (struct Node *)malloc(sizeof(struct Node));
-    c = (struct Node *)malloc(sizeof(struct Node));
-
-    /// Pushing Data's ->
+    //*? Pushing Data's ->
 
     a->data = 7;
     b->data = 9;
     c->data = 11;
 
-    /// Connecting Node's ->
+    //! Connecting Node's ->
 
-    a->Next = b;
-    b->Next = c;
-    c->Next = NULL;
+    a->next = b;
+    b->next = c;
+    c->next = NULL;
 
     head = a;
 
@@ -73,6 +80,9 @@ int main()
     /// After adding a node ->
     cout << "After ::: " << endl;
     printLinkedList();
+
+    // deAllocated Linkedlist
+    deAllocation();
 
     return 0;
 }
