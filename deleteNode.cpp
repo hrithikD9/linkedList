@@ -1,33 +1,33 @@
 #include <iostream>
 using namespace std;
 
-struct Node
+struct node
 {
     int data;
-    struct Node *Next;
+    struct node *next;
 };
 
-struct Node *head;
+struct node *head;
 
 /// Deleting Node ->
 
 void deleteNode()
 {
-    struct Node *temp = head;
-    head = head->Next;
-    delete (temp);
+    struct node *temp = head;
+    head = head->next;
+    delete temp;
 }
 
-/// Printing Out The Node ->
+//! Printing Out The Node ->
 
 void printLinkedList()
 {
-    struct Node *currentNode = head;
+    struct node *currentNode = head;
 
     while (currentNode != NULL)
     {
         cout << currentNode->data << " -> ";
-        currentNode = currentNode->Next;
+        currentNode = currentNode->next;
     }
 
     cout << endl;
@@ -35,33 +35,26 @@ void printLinkedList()
 
 int main()
 {
-    /// Declaration Of Node's ->
+    //? Memory Allocaions For Node's ->
 
-    struct Node *one = NULL;
-    struct Node *two = NULL;
-    struct Node *three = NULL;
-    struct Node *four = NULL;
+    struct node *one = new node;
+    struct node *two = new node;
+    struct node *three = new node;
+    struct node *four = new node;
 
-    /// Memory Allocaions For Node's ->
-
-    one = (struct Node *)malloc(sizeof(struct Node));
-    two = (struct Node *)malloc(sizeof(struct Node));
-    three = (struct Node *)malloc(sizeof(struct Node));
-    four = (struct Node *)malloc(sizeof(struct Node));
-
-    /// Pushing Data's ->
+    //* Pushing Data's ->
 
     one->data = 4;
     two->data = 7;
     three->data = 9;
     four->data = 11;
 
-    /// connecting Node's ->
+    //? connecting Node's ->
 
-    one->Next = two;
-    two->Next = three;
-    three->Next = four;
-    four->Next = NULL;
+    one->next = two;
+    two->next = three;
+    three->next = four;
+    four->next = NULL;
 
     head = one;
 
@@ -73,4 +66,10 @@ int main()
 
     cout << "After ::: " << endl;
     printLinkedList();
+
+    // De-Allocating Memories
+    while (head != nullptr)
+    {
+        deleteNode();
+    }
 }
